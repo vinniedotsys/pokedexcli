@@ -7,9 +7,9 @@ import (
 
 
 
-func commandHelp() error {
+func commandHelp(cfg *config) error {
 
-	commands := commandsList()
+	commands := cfg.commands
 	fmt.Print("Welcome to the Pokedex!\nUsage:\n\n")
 	for _, detail := range commands {
 		fmt.Printf("%v: %v\n", detail.name, detail.description)

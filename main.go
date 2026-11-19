@@ -2,7 +2,9 @@ package main
 
 
 func main() {
+	cfg := &config{
+		commands: commandsList(),
+	}
 
-
-	startRepl()
+	startRepl(cfg)
 }
