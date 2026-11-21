@@ -17,6 +17,8 @@ type cliCommand struct {
 
 type config struct {
 	commands map[string]cliCommand
+	location_next string
+	location_previous string
 }
 
 
@@ -31,6 +33,18 @@ func commandsList() map[string]cliCommand {
 			name:        "help",
 			description: "Displays a help message",
 			callback:    commandHelp,
+		    },
+		    "map": {
+			name:	     "map",
+			description: "List 20 locations areas in the Pokemon world",
+			callback: commandMap,
+			
+		    },
+		    "mapb": {
+			name:	     "mapb",
+			description: "List the previous 20 locations areas in the Pokemon world",
+			callback: commandMapBack,
+			
 		    },
 			
 		}
