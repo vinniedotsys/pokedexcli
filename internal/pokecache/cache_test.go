@@ -1,13 +1,16 @@
 package pokecache
 
 import (
-	"testing"
 	"bytes"
+	"testing"
+	"time"
 )
 
 func TestCache(t *testing.T) {
+	const interval = 5 * time.Second
+
 	var cache Cache
-	cache.NewCache()
+	cache.NewCache(interval)
 
 	if cache.Data == nil {
 		t.Fatal("expected cache.Data to be initialized after NewCache()")
@@ -71,4 +74,24 @@ func TestCache(t *testing.T) {
 			t.Errorf("expected (nil, false) for missing key, got (%v, %v)", val, ok)
 		}
 	})
+}
+
+func TestReapLoop(t *testing.T) {
+	const baseTime = 10 * time.Millisecond
+	const waitTime = baseTime + 20*time.Millisecond
+
+	var cache Cache
+	cache.NewCache(baseTime)
+
+	cache.Add("https://example.com", []byte("testdata"))
+
+	if _, ok := cache.Get("https://example.com"); !ok {
+		t.Fatal("expected key to be present immediately after Add")
+	}
+
+	time.Sleep(waitTime)
+
+	if _, ok := cache.Get("https://example.com"); ok {
+		t.Fatal("expected key to be reaped after interval elapsed")
+	}
 }
