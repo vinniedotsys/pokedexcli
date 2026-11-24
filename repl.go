@@ -11,7 +11,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, ...string) error
 }
 
 
@@ -46,6 +46,11 @@ func commandsList() map[string]cliCommand {
 			callback: commandMapBack,
 			
 		    },
+		   "explore": {
+			name:	    "explore",
+			description: "Display the names of all Pokémon found in the area passed in parameter",
+			callback: commandExplore,
+		   },
 			
 		}
 
@@ -69,7 +74,8 @@ func startRepl(cfg *config) {
 				fmt.Println("Unknown command")
 				continue
 			}
-			err := command.callback(cfg)
+			args := input[1:]
+			err := command.callback(cfg, args...)
 			if err != nil {
 				fmt.Println("Error executing command:", err)
 			}

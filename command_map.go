@@ -9,7 +9,7 @@ import (
 
 
 
-func commandMap(cfg *config) error {
+func commandMap(cfg *config, args ...string) error {
 	var url string
 	if cfg.location_next == "" {
 		url = "https://pokeapi.co/api/v2/location-area/"
@@ -36,7 +36,7 @@ func commandMap(cfg *config) error {
 }
 
 
-func commandMapBack(cfg *config) error {
+func commandMapBack(cfg *config, args ...string) error {
 	var url string
 	if cfg.location_previous == "" {
 		fmt.Println("You're on the first page")
