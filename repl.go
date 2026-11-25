@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"github.com/vinniedotsys/pokedexcli/internal/pokeapi"
 )
 
 
@@ -19,6 +20,7 @@ type config struct {
 	commands map[string]cliCommand
 	location_next string
 	location_previous string
+	pokedex map[string]pokeapi.Pokemon
 }
 
 
@@ -50,6 +52,11 @@ func commandsList() map[string]cliCommand {
 			name:	    "explore",
 			description: "Display the names of all Pokémon found in the area passed in parameter",
 			callback: commandExplore,
+		   },
+		   "catch": {
+			name:	    "catcg",
+			description: "Tries to catch to pokemon passed in parameter, if successfull, adds it to the Pokedex",
+			callback: commandCatch,
 		   },
 			
 		}
